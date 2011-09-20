@@ -1,3 +1,6 @@
 ZKCrypto/test-classes/
 ZKCrypto/war/WEB-INF/classes/
 ZKCrypto/war/WEB-INF/lib/
+ZKCrypto/gwt-unitCache/
+ZKCrypto/war/WEB-INF/deploy/
+ZKCrypto/war/zkcrypto/
