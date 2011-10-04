@@ -1,16 +1,15 @@
 package com.google.code.zkcrypto.client.crypt;
 
-import static org.junit.Assert.assertEquals;
+import com.google.gwt.junit.client.GWTTestCase;
 
-import org.junit.Test;
+public class Sha256Test extends GWTTestCase {
 
-/**
- * @author byo
- * 
- */
-public class Sha256Test {
+	@Override
+	public String getModuleName() {
+		return "com.google.code.zkcrypto.ZKCrypto";
+	}
 
-	@Test
+	
 	public void testHashes() {
 
 		testSingle("", "e3b0c44298fc1c149afbf4c8996fb924"
@@ -62,6 +61,5 @@ public class Sha256Test {
 		}
 
 		assertEquals(expected, hash.toString());
-
 	}
 }
