@@ -110,7 +110,7 @@ public class Sha256 {
 	 * @param pos
 	 *            start position within the buffer
 	 */
-	public void processBlock(byte[] m, int pos) {
+	private void processBlock(byte[] m, int pos) {
 		int a = state[0];
 		int b = state[1];
 		int c = state[2];
