@@ -12,7 +12,7 @@ package com.google.code.zkcrypto.client.crypt;
  * @author byo
  * 
  */
-public class Aes256 {
+public class Aes256 implements SymmetricBlockCipher {
 
 	public static final int KEY_LENGTH = 32;
 	public static final int BLOCK_LENGTH = 16;
@@ -184,7 +184,7 @@ public class Aes256 {
 	}
 
 	private static byte FD(byte x) {
-		return (byte) (((x&0xFF) >> 1) ^ ((x & 1) * 0x8d));
+		return (byte) (((x & 0xFF) >> 1) ^ ((x & 1) * 0x8d));
 	}
 
 	private static void expandEncKey(byte[] k, byte[] rc) {
@@ -260,6 +260,7 @@ public class Aes256 {
 			expandEncKey(deckey, rcon);
 	}
 
+	@Override
 	public void encrypt(byte[] buf) {
 
 		assert buf != null;
@@ -286,6 +287,7 @@ public class Aes256 {
 		addRoundKey(buf, key);
 	}
 
+	@Override
 	public void decrypt(byte[] buf) {
 
 		assert buf != null;
@@ -310,6 +312,16 @@ public class Aes256 {
 			subBytesInv(buf);
 		}
 		addRoundKey(buf, key);
+	}
+
+	@Override
+	public int blockSize() {
+		return BLOCK_LENGTH;
+	}
+
+	@Override
+	public String name() {
+		return "AES-256";
 	}
 
 }
