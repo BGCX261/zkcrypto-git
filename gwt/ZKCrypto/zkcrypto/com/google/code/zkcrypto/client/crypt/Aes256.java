@@ -184,15 +184,15 @@ public class Aes256 {
 	}
 
 	private static byte FD(byte x) {
-		return (byte) ((x >> 1) ^ ((x & 1) * 0x8d));
+		return (byte) (((x&0xFF) >> 1) ^ ((x & 1) * 0x8d));
 	}
 
-	private static void expandEncKey(byte[] k, Byte rc) {
-		k[0] ^= Sbox[k[29] & 0xFF] ^ rc;
+	private static void expandEncKey(byte[] k, byte[] rc) {
+		k[0] ^= Sbox[k[29] & 0xFF] ^ rc[0];
 		k[1] ^= Sbox[k[30] & 0xFF];
 		k[2] ^= Sbox[k[31] & 0xFF];
 		k[3] ^= Sbox[k[28] & 0xFF];
-		rc = F(rc);
+		rc[0] = F(rc[0]);
 
 		for (int i = 4; i < 16; i += 4) {
 			k[i + 0] ^= k[i - 4];
@@ -214,7 +214,7 @@ public class Aes256 {
 
 	}
 
-	private static void expandDecKey(byte[] k, Byte rc) {
+	private static void expandDecKey(byte[] k, byte[] rc) {
 
 		for (int i = 28; i > 16; i -= 4) {
 			k[i + 0] ^= k[i - 4];
@@ -235,8 +235,8 @@ public class Aes256 {
 			k[i + 3] ^= k[i - 1];
 		}
 
-		rc = FD(rc);
-		k[0] ^= Sbox[k[29] & 0xFF] ^ rc;
+		rc[0] = FD(rc[0]);
+		k[0] ^= Sbox[k[29] & 0xFF] ^ rc[0];
 		k[1] ^= Sbox[k[30] & 0xFF];
 		k[2] ^= Sbox[k[31] & 0xFF];
 		k[3] ^= Sbox[k[28] & 0xFF];
@@ -250,7 +250,7 @@ public class Aes256 {
 		assert key != null;
 		assert key.length == KEY_LENGTH;
 
-		Byte rcon = 1;
+		byte[] rcon = { 1 };
 		enckey = new byte[KEY_LENGTH];
 		deckey = new byte[KEY_LENGTH];
 
@@ -265,7 +265,7 @@ public class Aes256 {
 		assert buf != null;
 		assert buf.length == BLOCK_LENGTH;
 
-		Byte rcon = 1;
+		byte[] rcon = { 1 };
 		byte[] key = new byte[KEY_LENGTH];
 
 		addRoundKeyCpy(buf, enckey, key);
@@ -291,7 +291,7 @@ public class Aes256 {
 		assert buf != null;
 		assert buf.length == BLOCK_LENGTH;
 
-		Byte rcon = (byte) 0x80;
+		byte[] rcon = { (byte) 0x80 };
 		byte[] key = new byte[KEY_LENGTH];
 
 		addRoundKeyCpy(buf, deckey, key);

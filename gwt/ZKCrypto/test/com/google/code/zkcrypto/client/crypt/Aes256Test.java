@@ -16,6 +16,12 @@ public class Aes256Test extends GWTTestCase {
 				"8ea2b7ca516745bfeafc49904b496089");
 	}
 
+	private static void assertArraysEqual(byte[] a1, byte[] a2) {
+		assertEquals(a1.length, a2.length);
+		for (int i = 0; i < a1.length; ++i)
+			assertEquals(a1[i], a2[i]);
+	}
+
 	private void testSingle(byte[] key, byte[] plain, byte[] cipher) {
 		assertNotNull(key);
 		assertNotNull(plain);
@@ -30,9 +36,9 @@ public class Aes256Test extends GWTTestCase {
 		System.arraycopy(plain, 0, d, 0, d.length);
 
 		c.encrypt(d);
-		assertEquals(cipher, d);
+		assertArraysEqual(cipher, d);
 		c.decrypt(d);
-		assertEquals(plain, d);
+		assertArraysEqual(plain, d);
 	}
 
 	private static final String hexConv = "0123456789abcdef";
