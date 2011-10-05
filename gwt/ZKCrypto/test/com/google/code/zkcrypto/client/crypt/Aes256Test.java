@@ -16,6 +16,32 @@ public class Aes256Test extends GWTTestCase {
 				"8ea2b7ca516745bfeafc49904b496089");
 	}
 
+	public void testInconteam() {
+
+		// Vectors from:
+		// http://www.inconteam.com/software-development/41-encryption/55-aes-test-vectors#aes-ecb-256
+
+		testSingle("603deb1015ca71be2b73aef0857d7781"
+				+ "1f352c073b6108d72d9810a30914dff4",
+				"6bc1bee22e409f96e93d7e117393172a",
+				"f3eed1bdb5d2a03c064b5a7e3db181f8");
+
+		testSingle("603deb1015ca71be2b73aef0857d7781"
+				+ "1f352c073b6108d72d9810a30914dff4",
+				"ae2d8a571e03ac9c9eb76fac45af8e51",
+				"591ccb10d410ed26dc5ba74a31362870");
+
+		testSingle("603deb1015ca71be2b73aef0857d7781"
+				+ "1f352c073b6108d72d9810a30914dff4",
+				"30c81c46a35ce411e5fbc1191a0a52ef",
+				"b6ed21b99ca6f4f9f153e7b1beafed1d");
+
+		testSingle("603deb1015ca71be2b73aef0857d7781"
+				+ "1f352c073b6108d72d9810a30914dff4",
+				"f69f2445df4f9b17ad2b417be66c3710",
+				"23304b7a39f9f3ff067d8d8f9e24ecc7");
+	}
+
 	private static void assertArraysEqual(byte[] a1, byte[] a2) {
 		assertEquals(a1.length, a2.length);
 		for (int i = 0; i < a1.length; ++i)
