@@ -11,7 +11,7 @@ package com.google.code.zkcrypto.client.crypt;
  * @author byo
  * 
  */
-public class Sha256 {
+public class Sha256 implements HashAlgorithm {
 
 	private static int[] K = { 0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
 			0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5, 0xD807AA98,
@@ -161,6 +161,7 @@ public class Sha256 {
 	 * 
 	 * @param data
 	 */
+	@Override
 	public void feed(byte[] data) {
 		totalLen += data.length;
 
@@ -196,6 +197,7 @@ public class Sha256 {
 	 * 
 	 * @return generated hash
 	 */
+	@Override
 	public byte[] finish() {
 		if (feedBuffPos >= LAST_SIZE) {
 			feedBuff[feedBuffPos++] = (byte) 0x80;
@@ -225,6 +227,16 @@ public class Sha256 {
 		}
 
 		return ret;
+	}
+
+	@Override
+	public int hashLength() {
+		return state.length * 4;
+	}
+
+	@Override
+	public String name() {
+		return "SHA-256";
 	}
 
 }
